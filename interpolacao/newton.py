@@ -1,18 +1,16 @@
-from functools import reduce
+from interpolacao import product
 
 def newton(x, fx):
-    calcula = lambda index, ordem: (y[index + 1] - y[index]) / (x[index + ordem] - x[index])
-
-    tab = [fx]
+    tabela_de_deltas = [fx]
     for ordem in range(1, len(x)):
-        y = tab[ordem - 1]
-        tab.append([calcula(index, ordem) for index in range(0, len(x) - ordem)])
+        y = tabela_de_deltas[ordem - 1]
 
-    y = [a[0] for a in tab] 
+        delta_ordem = [(y[i + 1] - y[i]) / (x[i + ordem] - x[i]) 
+                       for i in range(0, len(x) - ordem)] 
 
-    def funcao(numero):
-        mult = [numero - xi for xi in x]
-        somatorio = lambda n: reduce(lambda t, a: t * a, mult[:n])
-        return sum(somatorio(index + 1) * yi for index, yi in enumerate(y[1:])) + fx[0]
+        tabela_de_deltas.append(delta_ordem)
 
-    return funcao
+    deltas = [delta[0] for delta in tabela_de_deltas] 
+
+    return lambda num: sum(product([num - xi for xi in x[:i]] or [1]) * yi 
+                       for i, yi in enumerate(deltas))
