@@ -1,4 +1,4 @@
-from interpolacao.newton import newton
+from interpolacao.metodos import newton
 from unittest import TestCase
 
 class TestNewton(TestCase):
