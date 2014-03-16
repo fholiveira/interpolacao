@@ -13,4 +13,10 @@ def newton(x, fx):
     deltas = [delta[0] for delta in tabela_de_deltas] 
 
     return lambda num: sum(product([num - xi for xi in x[:i]] or [1]) * yi 
-                       for i, yi in enumerate(deltas))
+                           for i, yi in enumerate(deltas))
+
+
+def lagrange(x, fx):
+    L = lambda num, xi: product((num - xj) / (xi - xj) for xj in x if xj != xi)
+
+    return lambda num: sum([yi * L(num, xi) for xi, yi in zip(x, fx)]) 
