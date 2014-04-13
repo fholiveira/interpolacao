@@ -21,14 +21,15 @@ def _mostrar(grafico):
 
     show()
 
+
 def product(lista):
     return reduce(lambda acumulado, atual: acumulado * atual, lista)
 
 
-def plotar_interpolacao(funcao, metodo, intervalo=(0, 1), pontos=100, pontos_entre_zeros=10):
+def plotar_interpolacao(funcao, metodo, intervalo=(0, 1), pontos=100, pontos_entre_zeros=50):
     inicio, fim = intervalo
     
-    x = linspace(float128(inicio), float128(fim), float128(pontos))
+    x = linspace(float(inicio), float(fim), float(pontos))
     y = [funcao(xi) for xi in x]
 
     interpolacao = metodo(x, y)

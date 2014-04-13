@@ -1,4 +1,5 @@
 from interpolacao import product
+from numpy import linalg
 
 def newton(x, fx):
     tabela_de_deltas = [fx]
@@ -20,3 +21,9 @@ def lagrange(x, fx):
     L = lambda num, xi: product((num - xj) / (xi - xj) for xj in x if xj != xi)
 
     return lambda num: sum([yi * L(num, xi) for xi, yi in zip(x, fx)]) 
+
+def polinomial(x, fx):
+    matriz = [[a ** grau for grau in range(0, len(x))] for a in x]
+    coeficientes = linalg.solve(matriz, fx)
+
+    return lambda num: sum(a * num ** grau for grau, a in enumerate(coeficientes))
